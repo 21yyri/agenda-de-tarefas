@@ -8,7 +8,7 @@ public class Main {
         while (true) {
             // MENU
             System.out.println("MENU - Agenda");
-            System.out.println("[C] para inserir, [R] para ler, [U] para atualizar e [D] para apagar.");
+            System.out.println("[C] para criar, [L] para ler, [A] para atualizar, [D] para deletar e [M] para marcar concluído.");
 
             Scanner input = new Scanner(System.in);
             String resposta = input.nextLine();
@@ -41,16 +41,13 @@ public class Main {
                     
                     limparTerminal();
                     agenda.lerTarefas();
-
-                    input.close();
                     break;
-                case 'R':
+                case 'L':
                     limparTerminal();
                     agenda.lerTarefas();
                     
-                    input.close();
                     break;
-                case 'U':
+                case 'A':
                     limparTerminal();
                     agenda.lerTarefas();
                     System.out.println("[0] para sair.");
@@ -65,8 +62,6 @@ public class Main {
                     agenda.atualizarTarefa(id);
                     limparTerminal();
 
-                    
-                    input.close();
                     break;
                 case 'D':
                     limparTerminal();
@@ -80,7 +75,21 @@ public class Main {
                     limparTerminal(); 
                     agenda.removerTarefa(respostaDel);
                     
-                    input.close();
+                    break;
+                case 'M':
+                    limparTerminal();
+
+                    System.out.println("[0] para sair.");
+                    System.out.println("[ID] Qual item deseja marcar como concluído? ");
+
+                    int respostaConcluido = input.nextInt();
+                    if (respostaConcluido < 1) {
+                        System.out.println("Índice inválido.");
+                        break;
+                    }
+
+                    agenda.marcarConcluido(respostaConcluido);
+                    limparTerminal();
                     break;
                 default:
                     break;

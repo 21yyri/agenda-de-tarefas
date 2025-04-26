@@ -44,9 +44,9 @@ public class Agenda {
 
         for (Tarefa tarefa: tarefas) {
             if (tarefa.getDescricao() != null) {
-                System.out.println(String.format("%d. %s > %s", tarefa.getId(), tarefa.getTarefa(), tarefa.getDescricao()));
+                System.out.println(String.format("%d. %s - %s > %b", tarefa.getId(), tarefa.getTarefa(), tarefa.getDescricao(), tarefa.getFeito()));
             } else {
-                System.out.println(String.format("%d. %s", tarefa.getId(), tarefa.getTarefa()));
+                System.out.println(String.format("%d. %s > %b", tarefa.getId(), tarefa.getTarefa(), tarefa.getFeito()));
             }
         }
     }
@@ -101,5 +101,15 @@ public class Agenda {
                 salvarTarefas(tarefas);
             }
         }
+    }
+    public void marcarConcluido(int id) {
+        List<Tarefa> tarefas = listarTarefas();
+        for (Tarefa tarefa: tarefas) {
+            if (tarefa.getId() == id) {
+                tarefa.setFeito(true);
+                break;
+            }
+        }
+        salvarTarefas(tarefas);
     }
 }
