@@ -19,14 +19,15 @@ public class Agenda {
             return new ArrayList<>();
         }
     }
-    public void salvarTarefas(List<Tarefa> tarefas) {
+    public static void salvarTarefas(List<Tarefa> tarefas) {
         try {
             mapper.writeValue(new File(filePath), tarefas);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void adicionarTarefa(Tarefa tarefa) {
+
+    public static void adicionarTarefa(Tarefa tarefa) {
 
         List<Tarefa> tarefas = listarTarefas();
         System.out.println(tarefas.size());
@@ -35,22 +36,23 @@ public class Agenda {
 
         salvarTarefas(tarefas);
     }
-    public void lerTarefas() {
+
+    public static void lerTarefas() {
         List<Tarefa> tarefas = listarTarefas();
 
         if (tarefas.size() == 0) {
             return;
         }
-
+        
         for (Tarefa tarefa: tarefas) {
             if (tarefa.getDescricao() != null) {
-                System.out.println(String.format("%d. %s - %s > %b", tarefa.getId(), tarefa.getTarefa(), tarefa.getDescricao(), tarefa.getFeito()));
+                System.out.println(String.format("%d. %s - %s > %s", tarefa.getId(), tarefa.getTarefa(), tarefa.getDescricao(), tarefa.getFeito()? "feito" : "não feito"));
             } else {
-                System.out.println(String.format("%d. %s > %b", tarefa.getId(), tarefa.getTarefa(), tarefa.getFeito()));
+                System.out.println(String.format("%d. %s > %s", tarefa.getId(), tarefa.getTarefa(), tarefa.getFeito()? "feito" : "não feito"));
             }
         }
     }
-    public void removerTarefa(int id) {
+    public static void removerTarefa(int id) {
         List<Tarefa> tarefas = listarTarefas();
         if (id < 0 || id > tarefas.size()) {
             System.out.println("Índice inválido.");
@@ -70,9 +72,9 @@ public class Agenda {
 
         salvarTarefas(novasTarefas);
     }
-    public void atualizarTarefa(int id) {
+    public static void atualizarTarefa(int id) {
         List<Tarefa> tarefas = listarTarefas();
-        if (id < 1 || id > tarefas.size()) {
+        if (id <= 0 || id > tarefas.size()) {
             System.out.println("Índice inválido.");
             return;
         }
@@ -97,16 +99,19 @@ public class Agenda {
                 } else {
                     tarefa.setDescricao(null);
                 }
-
+                
                 salvarTarefas(tarefas);
             }
         }
     }
-    public void marcarConcluido(int id) {
+    public static void alterarEstado(int id) {
         List<Tarefa> tarefas = listarTarefas();
+
+        lerTarefas();
+
         for (Tarefa tarefa: tarefas) {
             if (tarefa.getId() == id) {
-                tarefa.setFeito(true);
+                tarefa.setFeito(!tarefa.getFeito());
                 break;
             }
         }

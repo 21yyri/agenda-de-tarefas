@@ -2,13 +2,12 @@ package tarefas.agenda;
 
 import java.util.Scanner;
 
-public class Main {
+public class Main extends Agenda {
     public static void main(String[] args) {
-        Agenda agenda = new Agenda();
         while (true) {
             // MENU
             System.out.println("MENU - Agenda");
-            System.out.println("[C] para criar, [L] para ler, [A] para atualizar, [D] para deletar e [M] para marcar concluído.");
+            System.out.println("[C] para criar, [L] para ler, [A] para atualizar, [D] para deletar e [M] para alterar estado.");
 
             Scanner input = new Scanner(System.in);
             String resposta = input.nextLine();
@@ -37,19 +36,22 @@ public class Main {
                     if (desc.toLowerCase().charAt(0) != 'q') {
                         tarefa.setDescricao(desc.trim());
                     }
-                    agenda.adicionarTarefa(tarefa);
+                    adicionarTarefa(tarefa);
                     
                     limparTerminal();
-                    agenda.lerTarefas();
+                    lerTarefas();
+                    
                     break;
                 case 'L':
                     limparTerminal();
-                    agenda.lerTarefas();
+                    lerTarefas();
                     
                     break;
                 case 'A':
                     limparTerminal();
-                    agenda.lerTarefas();
+
+                    lerTarefas();
+
                     System.out.println("[0] para sair.");
                     System.out.println("[ID] Qual tarefa deseja atualizar? ");
                     int id = input.nextInt();
@@ -59,13 +61,16 @@ public class Main {
                         break;
                     }
 
-                    agenda.atualizarTarefa(id);
+                    atualizarTarefa(id);
+                    
                     limparTerminal();
+                    
 
                     break;
                 case 'D':
                     limparTerminal();
-                    agenda.lerTarefas();
+                    
+                    lerTarefas();
 
                     System.out.println("[0] para sair.");
                     System.out.println("[ID] Qual item deseja remover? ");
@@ -73,11 +78,14 @@ public class Main {
                     int respostaDel = input.nextInt();
 
                     limparTerminal(); 
-                    agenda.removerTarefa(respostaDel);
+                    
+                    removerTarefa(respostaDel);
                     
                     break;
                 case 'M':
                     limparTerminal();
+
+                    lerTarefas();
 
                     System.out.println("[0] para sair.");
                     System.out.println("[ID] Qual item deseja marcar como concluído? ");
@@ -88,8 +96,10 @@ public class Main {
                         break;
                     }
 
-                    agenda.marcarConcluido(respostaConcluido);
+                    alterarEstado(respostaConcluido);
+                    
                     limparTerminal();
+                    
                     break;
                 default:
                     break;
